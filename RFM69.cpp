@@ -85,6 +85,7 @@ bool RFM69::initialize(uint8_t freqBand, uint8_t nodeID, uint8_t networkID)
 
   digitalWrite(_slaveSelectPin, HIGH);
   pinMode(_slaveSelectPin, OUTPUT);
+  pinMode(_interruptPin, INPUT);
   SPI.begin();
   unsigned long start = millis();
   uint8_t timeout = 50;
@@ -443,7 +444,8 @@ void RFM69::select() {
   _SPSR = SPSR;
 #endif
   // set RFM69 SPI settings
-  SPI.setDataMode(SPI_MODE0);
+  //Removed this line for teensy compatibility
+  //SPI.setDataMode(SPI_MODE0);
   SPI.setBitOrder(MSBFIRST);
   SPI.setClockDivider(SPI_CLOCK_DIV4); // decided to slow down from DIV2 after SPI stalling in some instances, especially visible on mega1284p when RFM69 and FLASH chip both present
   digitalWrite(_slaveSelectPin, LOW);
